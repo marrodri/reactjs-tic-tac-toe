@@ -11,71 +11,29 @@ function Square(props) {
 	</button>);
 }
 
-// renderSquare(i) {
-// 	return (
-// 		<Square
-// 			value={this.props.squares[i]}
-// 			onClick={() => this.props.onClick(i)}
-// 		/>
-// 	);
-// }
 
 function Board(props){
+	
+	const board = [];
+	const renderSquare = (i) => {
+		return <Square
+				value={props.squares[i]}
+				onClick={() => props.onClick(i)}
+		/>
+		// return <div>hello world {i}</div>
+	}
+	let row = [];
+	for(let i = 0; i < 3; i++){
+		// for(let j = i; (j % 3) !== 0;j++){	
+		row.push(renderSquare(i));
+			// row.push(<div>hello world</div>);
+		// }
+		// i = j;
+		board.push(<div class='row-board'>{row}</div>);
+	}
 	return (
 		<div>
-			<div className="board-row">
-				{/* {this.renderSquare(0)}
-				{this.renderSquare(1)}
-				{this.renderSquare(2)} */}
-
-				<Square
-					value={props.squares[0]}
-					onClick={() => props.onClick(0)}
-				/>
-				<Square
-					value={props.squares[1]}
-					onClick={() => props.onClick(1)}
-				/>
-				<Square
-					value={props.squares[2]}
-					onClick={() => props.onClick(2)}
-				/>
-			</div>
-
-			<div className="board-row">
-				{/* {this.renderSquare(3)}
-				{this.renderSquare(4)}
-				{this.renderSquare(5)} */}
-				<Square
-					value={props.squares[3]}
-					onClick={() => props.onClick(3)}
-				/>
-				<Square
-					value={props.squares[4]}
-					onClick={() => props.onClick(4)}
-				/>
-				<Square
-					value={props.squares[5]}
-					onClick={() => props.onClick(5)}
-				/>
-			</div>
-			<div className="board-row">
-				{/* {this.renderSquare(6)}
-				{this.renderSquare(7)}
-				{this.renderSquare(8)} */}
-				<Square
-					value={props.squares[6]}
-					onClick={() => props.onClick(6)}
-				/>
-				<Square
-					value={props.squares[7]}
-					onClick={() => props.onClick(7)}
-				/>
-				<Square
-					value={props.squares[8]}
-					onClick={() => props.onClick(8)}
-				/>
-			</div>
+			{board}
 		</div>
 	);
 }
