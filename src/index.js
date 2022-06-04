@@ -11,32 +11,34 @@ function Square(props) {
 	</button>);
 }
 
-
-function Board(props){
-	
+function Board(props) {
 	const board = [];
-	const renderSquare = (i) => {
-		return <Square
-				value={props.squares[i]}
-				onClick={() => props.onClick(i)}
+	var i = 1;
+	var row = [];
+	const renderSquare = (i) => (
+		<Square
+			value={props.squares[i]}
+			onClick={() => props.onClick(i)}
 		/>
-		// return <div>hello world {i}</div>
+	);
+
+	while (i <= 9) {
+		row.push(renderSquare(i - 1));
+		if((i % 3) === 0){
+			let newrow = [...row];
+			board.push(<div className='row-board'>{newrow}</div>);
+			row = [];
+		}
+		i++;
 	}
-	let row = [];
-	for(let i = 0; i < 3; i++){
-		// for(let j = i; (j % 3) !== 0;j++){	
-		row.push(renderSquare(i));
-			// row.push(<div>hello world</div>);
-		// }
-		// i = j;
-		board.push(<div class='row-board'>{row}</div>);
-	}
+	console.log('rendering board');
 	return (
 		<div>
 			{board}
 		</div>
 	);
 }
+
 
 
 class Game extends React.Component {
@@ -52,7 +54,7 @@ class Game extends React.Component {
 	}
 
 	handleClick(i) {
-		const history = this.state.history.slice(0, 
+		const history = this.state.history.slice(0,
 			this.state.stepNumber + 1);
 		const current = history[history.length - 1];
 		const squares = current.squares.slice();
