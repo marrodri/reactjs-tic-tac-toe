@@ -39,9 +39,36 @@ function Board(props) {
 	);
 }
 
+function Game(){
+	const [history, setHistory]= useState({squares: Array(9).fill(null)});
+	const [stepNumber, setStepNumber] = useState(0);
+	const [xIsNext, setXIsNext] = useState(true);
+
+	const handleClick = (i) => {
+		const fullHistory = history.slice();
+		const current = fullHistory[fullHistory.length - 1];
+		const squares = current.squares.slice();
+
+		if (calculateWinner(squares) || squares[i]){
+			return ;
+		}
+		squares[i] = xIsNext ? 'X' : 'O';
+		// TODO, update the setHistory content
+		setHistory();
+		setStepNumber(history.length);
+		setXIsNext(!xIsNext);
+	}
+
+	const jumpTo = (step)=> {
+		setStepNumber(step);
+		setXIsNext((step % 2) === 0);
+	}
+
+	// TODO checkpoint. move the render logic to this part.
+}
 
 
-class Game extends React.Component {
+class GameDefunct extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
