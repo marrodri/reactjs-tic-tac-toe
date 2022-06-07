@@ -1,7 +1,7 @@
-import React from 'react';
+import React , {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-
+// import React, {useEffect, useState} from 'react';
 
 function Square(props) {
 	return (<button className="square"
@@ -45,8 +45,8 @@ function Game(){
 	const [xIsNext, setXIsNext] = useState(true);
 
 	const handleClick = (i) => {
-		const fullHistory = history.slice();
-		const current = fullHistory[fullHistory.length - 1];
+		const copyHistory = history.slice(0, stepNumber + 1);
+		const current = copyHistory[copyHistory.length - 1];
 		const squares = current.squares.slice();
 
 		if (calculateWinner(squares) || squares[i]){
@@ -54,17 +54,50 @@ function Game(){
 		}
 		squares[i] = xIsNext ? 'X' : 'O';
 		// TODO, update the setHistory content
-		setHistory();
+		setHistory(copyHistory.concat([{squares: squares,}]));
 		setStepNumber(history.length);
 		setXIsNext(!xIsNext);
 	}
 
-	const jumpTo = (step)=> {
-		setStepNumber(step);
-		setXIsNext((step % 2) === 0);
-	}
+	// const jumpTo = (step) => {
+	// 	setStepNumber(step);
+	// 	setXIsNext((step % 2) === 0);
+	// }
 
 	// TODO checkpoint. move the render logic to this part.
+	// const moves = history.map((step, move) => {
+	// 	const desc = move ?
+	// 	'Go to move #' + move : 'Go to game start';
+	// 	return (
+	// 		<li key={move}>
+	// 		<button onClick={()=>this.jumpTo(move)}>{desc}</button>
+	// 	</li>);
+	// });
+
+	let status = 'status';
+
+	// if(winner){
+	// 	status = 'Winner ' + winner;
+	// }
+	// else{
+	// 	status = 'Next player: ' + (xIsNext ? 'X' : 'O');
+	// }
+
+	return(
+		
+		<div className='game'>
+			<div>
+				<Board 
+					squares={history.squares}
+					onClick={(i) => handleClick(i)}
+				/>
+			</div>
+			<div className='game-info'>
+				<div className='text-3xl font-bold underline'>{status}</div>
+				{/* <ol>{moves}</ol> */}
+			</div>
+		</div>
+	);
 }
 
 
@@ -129,7 +162,6 @@ class GameDefunct extends React.Component {
 			status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
 		}
 
-
 		return (
 			<div className='game'>
 				<div>
@@ -145,7 +177,6 @@ class GameDefunct extends React.Component {
 			</div>
 		)
 	}
-
 }
 
 // ==============================
