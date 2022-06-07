@@ -1,7 +1,6 @@
-import React , {useEffect, useState} from 'react';
+import React , {useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-// import React, {useEffect, useState} from 'react';
 
 function Square(props) {
 	return (<button className="square"
@@ -40,7 +39,7 @@ function Board(props) {
 }
 
 function Game(){
-	const [history, setHistory]= useState({squares: Array(9).fill(null)});
+	const [history, setHistory]= useState([{squares: Array(9).fill(null)}]);
 	const [stepNumber, setStepNumber] = useState(0);
 	const [xIsNext, setXIsNext] = useState(true);
 
@@ -54,7 +53,6 @@ function Game(){
 			return ;
 		}
 		squares[i] = xIsNext ? 'X' : 'O';
-		// TODO, update the setHistory content
 		setHistory(copyHistory.concat([{squares: squares,}]));
 		setStepNumber(history.length);
 		setXIsNext(!xIsNext);
@@ -66,16 +64,16 @@ function Game(){
 	}
 
 	// There's a bug here, it's in a infinite loop
-	// const moves = history.map((step, move) => {
-	// 	const desc = move ?
-	// 	'Go to move #' + move : 'Go to game start';
-	// 	return (
-	// 		<li key={move}>
-	// 		<button onClick={()=>jumpTo(move)}>{desc}</button>
-	// 	</li>);
-	// });
+	const moves = history.map((step, move) => {
+		const desc = move ?
+		'Go to move #' + move : 'Go to game start';
+		return (
+			<li key={move}>
+			<button onClick={()=>jumpTo(move)}>{desc}</button>
+		</li>);
+	});
 
-	const winner = calculateWinner(history.squares);
+	const winner = calculateWinner(history[stepNumber].squares);
 	let status;
 	if(winner){
 		status = 'Winner ' + winner;
@@ -83,13 +81,11 @@ function Game(){
 	else{
 		status = 'Next player: ' + (xIsNext ? 'X' : 'O');
 	}
-
 	return(
 		<div className='game'>
 			<div>
 				<Board 
-					squares={history.squares}
-					// for some reason, it doesn't react when clicking.
+					squares={history[stepNumber].squares}
 					onClick={(i) => handleClick(i)}
 				/>
 			</div>
