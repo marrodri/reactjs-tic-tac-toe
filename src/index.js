@@ -95,7 +95,7 @@ function Game(){
 			</div>
 			<div className='game-info'>
 				<div className='text-3xl font-bold underline'>{status}</div>
-				{/* <ol>{moves}</ol> */}
+				<ol>{moves}</ol>
 			</div>
 		</div>
 	);
@@ -208,4 +208,3 @@ function calculateWinner(squares) {
 	}
 	return (null);
 }
-
