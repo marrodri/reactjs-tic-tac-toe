@@ -59,42 +59,41 @@ function Game(){
 		setXIsNext(!xIsNext);
 	}
 
-	// const jumpTo = (step) => {
-	// 	setStepNumber(step);
-	// 	setXIsNext((step % 2) === 0);
-	// }
+	const jumpTo = (step) => {
+		setStepNumber(step);
+		setXIsNext((step % 2) === 0);
+	}
 
-	// TODO checkpoint. move the render logic to this part.
-	// const moves = history.map((step, move) => {
-	// 	const desc = move ?
-	// 	'Go to move #' + move : 'Go to game start';
-	// 	return (
-	// 		<li key={move}>
-	// 		<button onClick={()=>this.jumpTo(move)}>{desc}</button>
-	// 	</li>);
-	// });
-
-	let status = 'status';
-
-	// if(winner){
-	// 	status = 'Winner ' + winner;
-	// }
-	// else{
-	// 	status = 'Next player: ' + (xIsNext ? 'X' : 'O');
-	// }
+	// There's a bug here, it's in a infinite loop
+	const moves = history.map((step, move) => {
+		const desc = move ?
+		'Go to move #' + move : 'Go to game start';
+		return (
+			<li key={move}>
+			<button onClick={()=>jumpTo(move)}>{desc}</button>
+		</li>);
+	});
+	const winner = calculateWinner(history.squares);
+	let status;
+	if(winner){
+		status = 'Winner ' + winner;
+	}
+	else{
+		status = 'Next player: ' + (xIsNext ? 'X' : 'O');
+	}
 
 	return(
-		
 		<div className='game'>
 			<div>
 				<Board 
 					squares={history.squares}
+					// for some reason, it doesn't react when clicking.
 					onClick={(i) => handleClick(i)}
 				/>
 			</div>
 			<div className='game-info'>
 				<div className='text-3xl font-bold underline'>{status}</div>
-				{/* <ol>{moves}</ol> */}
+				<ol>{moves}</ol>
 			</div>
 		</div>
 	);
