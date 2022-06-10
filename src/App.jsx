@@ -10,7 +10,7 @@ export default function App() {
           paddingBottom: "1rem",
         }}
       >
-		<Link to='/index'>index</Link> {"| "}
+		<Link to='/Game'>Game</Link> {"| "}
 		<Link to='/aboutThis'>About This</Link>
 	  </nav>
 	  <Outlet/>

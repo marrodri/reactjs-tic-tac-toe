@@ -15,20 +15,20 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<App />} />
-      {/* nest these routes inside App */}
-      <Route path="game" element={<Game />} />
-      <Route path="aboutThis" element={<AboutThis />} />
-      <Route
-        path="*"
-        element={
-          <main style={{ padding: "1rem" }}>
-            <p>404: there's nothing here.</p>
-          </main>
-        }
-      />
+      <Route path="/" element={<App />}>
+        {/* nest these routes inside App */}
+        <Route path="game" element={<Game />} />
+        <Route path="aboutThis" element={<AboutThis />} />
+        <Route
+          path="*"
+          element={
+            <main style={{ padding: "1rem" }}>
+              <p>404: there's nothing here.</p>
+            </main>
+          }
+        />
+      </Route>
     </Routes>
-    <Game />
   </BrowserRouter>
 );
 
