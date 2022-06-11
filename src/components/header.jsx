@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 export default function Header() {
   return (
     <div className="bg-sky-300 flex flex-col justify-start items-center mb-[80px]">
-      <h1 class="font-medium leading-tight text-5xl mt-0 mb-2 text-white text-center">
+      <h1 className="font-medium leading-tight text-5xl mt-0 mb-2 text-white text-center">
         Tic Tac Toe
       </h1>
-      <h2 class="font-medium leading-tight text-[20px] mt-0 mb-2 text-white text-center">
+      <h2 className="font-medium leading-tight text-[20px] mt-0 mb-2 text-white text-center">
         Please click on Game to start a game
       </h2>
       <Navbar />

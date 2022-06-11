@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 // import ReactDOM from "react-dom/client";
 import "../index.css";
 import { calculateWinner } from "../util/util";
@@ -20,7 +21,11 @@ function Board(props) {
   var i = 1;
   var row = [];
   const renderSquare = (i) => (
-    <Square value={props.squares[i]} onClick={() => props.onClick(i)} />
+    <Square
+      key={i.toString()}
+      value={props.squares[i]}
+      onClick={() => props.onClick(i)}
+    />
   );
 
   while (i <= 9) {
@@ -28,12 +33,15 @@ function Board(props) {
     if (i % 3 === 0) {
       // ... => expand operator
       let newrow = [...row];
-      board.push(<div className="flex flex-row">{newrow}</div>);
+      board.push(
+        <div key={i.toString()} className="flex flex-row">
+          {newrow}
+        </div>
+      );
       row = [];
     }
     i++;
   }
-  console.log("rendering board");
   return <div className="flex flex-col">{board}</div>;
 }
 
@@ -41,6 +49,8 @@ export default function Game() {
   const [history, setHistory] = useState([{ squares: Array(9).fill(null) }]);
   const [stepNumber, setStepNumber] = useState(0);
   const [xIsNext, setXIsNext] = useState(true);
+  const [status, setStatus] = useState("");
+  const [moves, SetMoves] = useState();
 
   const handleClick = (i) => {
     console.log("click No. " + i);
@@ -53,7 +63,7 @@ export default function Game() {
     }
     squares[i] = xIsNext ? "X" : "O";
     setHistory(copyHistory.concat([{ squares: squares }]));
-    setStepNumber(history.length);
+    setStepNumber(copyHistory.length);
     setXIsNext(!xIsNext);
   };
 
@@ -62,23 +72,16 @@ export default function Game() {
     setXIsNext(step % 2 === 0);
   };
 
-  // There's a bug here, it's in a infinite loop
-  const moves = history.map((step, move) => {
-    const desc = move ? "Go to move #" + move : "Go to game start";
-    return (
-      <li className="text-3xl" key={move}>
-        <button onClick={() => jumpTo(move)}>{desc}</button>
-      </li>
-    );
-  });
+  useEffect(() => {
+    const winner = calculateWinner(history[stepNumber].squares);
 
-  const winner = calculateWinner(history[stepNumber].squares);
-  let status;
-  if (winner) {
-    status = "Winner " + winner;
-  } else {
-    status = "Next player: " + (xIsNext ? "X" : "O");
-  }
+    if (winner) {
+      setStatus("Winner " + winner);
+    } else {
+      setStatus("Next player: " + (xIsNext ? "X" : "O"));
+    }
+  }, [stepNumber]);
+
   return (
     <div className="flex flex-col h-full justify-start items-center space-y-8">
       <Board
@@ -87,7 +90,16 @@ export default function Game() {
       />
       <div className="">
         <div className="text-4xl font-bold underline">{status}</div>
-        <ol class="">{moves}</ol>
+        <ol className="">
+          {history.map((gameState, index) => {
+            const desc = index === 0 ? "Go to game start" : `Go to move # ${index}`;
+            return (
+              <li className="text-3xl" key={index}>
+                <button onClick={() => jumpTo(index)}>{desc}</button>
+              </li>
+            );
+          })}
+        </ol>
       </div>
     </div>
   );
