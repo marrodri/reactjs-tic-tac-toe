@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import Game from "./routes/game";
 import AboutThis from "./routes/aboutThis";
+import Resources from "./routes/resources";
 
 // ==============================
 
@@ -19,6 +20,7 @@ root.render(
         {/* nest these routes inside App */}
         <Route path="game" element={<Game />} />
         <Route path="aboutThis" element={<AboutThis />} />
+        <Route path="Resources" element={<Resources />} />
         <Route
           path="*"
           element={

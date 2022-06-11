@@ -11,7 +11,8 @@ export default function App() {
         }}
       >
 		<Link to='/Game'>Game</Link> {"| "}
-		<Link to='/aboutThis'>About This</Link>
+		<Link to='/aboutThis'>About This</Link> {"| "}
+		<Link to='/resources'>Resources</Link>
 	  </nav>
 	  <Outlet/>
     </div>
