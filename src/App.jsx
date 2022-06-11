@@ -2,14 +2,14 @@ import { Outlet, Link } from "react-router-dom";
 
 export default function App() {
   return (
-    <div>
+    <div className="bg-sky-300">
       <h1 class="
       font-medium 
       leading-tight 
        text-5xl 
       mt-0
        mb-2
-      text-blue-600">
+      text-white">
         Tic Tac Toe
       </h1>
       <h2 class="
@@ -18,7 +18,7 @@ export default function App() {
         text-4xl
         mt-0
         mb-2
-        text-blue-600
+        text-white
       ">
          Please click on Game to start a game
 
@@ -29,9 +29,9 @@ export default function App() {
           paddingBottom: "1rem",
         }}
       >
-        <Link className="text-2xl" to="/Game">Game</Link> {"| "}
-        <Link className="text-2xl" to="/aboutThis">About This</Link> {"| "}
-        <Link className="text-2xl" to="/resources">Resources</Link>
+        <Link className="text-2xl text-white" to="/Game">Game</Link> {"| "}
+        <Link className="text-2xl text-white" to="/aboutThis">About This</Link> {"| "}
+        <Link className="text-2xl text-white" to="/resources">Resources</Link>
       </nav>
       <Outlet />
     </div>

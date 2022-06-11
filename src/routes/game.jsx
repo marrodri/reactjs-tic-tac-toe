@@ -26,6 +26,7 @@ function Board(props) {
   while (i <= 9) {
     row.push(renderSquare(i - 1));
     if (i % 3 === 0) {
+      // ... => expand operator
       let newrow = [...row];
       board.push(<div className="row-board">{newrow}</div>);
       row = [];
